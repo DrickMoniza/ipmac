@@ -402,7 +402,7 @@
             
             .bg {
               /* The image used */
-              background-image: url("automation5.jpg");
+              background-image: url("automation_final.jpg");
             
               /* Full height */
               height: 100%; 
@@ -419,7 +419,8 @@
     <BODY>
         <div class="topnav">
             <a class="active" href="#home">Home</a>
-            <a href="Course_Framework.pdf" >Framework</a> 
+            <a href="javascript:void(0)" >Framework</a>
+            <!--<a href="Course_Framework.pdf" >Framework</a> 
             
             <div class="dropdown">
                 <button class="dropbtn">Outline/Timetable <i class="fa fa-caret-down"></i></button>
@@ -427,69 +428,84 @@
                       <a href="Outline.pdf">Course Outline</a>
                       <a href="Timetable.pdf">Daily Timetable</a>
                     </div>
+            </div> -->
+            <div class="dropdown">
+                <button class="dropbtn">Outline/Timetable <i class="fa fa-caret-down"></i></button>
+                    <div class="dropdown-content">
+                      <a href="javascript:void(0)">Course Outline</a>
+                      <a href="javascript:void(0)">Daily Timetable</a>
+                    </div>
             </div>
+            <a href="javascript:void(0)">Syllabus</a>
+            <a href="javascript:void(0)">Instructor's Guide</a>
+            <!--
             <a href="Syllabus.pdf">Syllabus</a>
-            <a href="Guide.pdf">Instructor's Guide</a>
+            <a href="Guide.pdf">Instructor's Guide</a> -->
 
             <div class="dropdown">
                 <button class="dropbtn"> Lecture / Assessment Instruments <i class="fa fa-caret-down"></i></button>
                     <div class="dropdown-content">
-                        <a href="Essay_Rubrics1.pdf">Grading Criteria</a>
-                        <!--
-                        <ul id = "nav">
-                            <ul>
-                                <li><a href="#">Essay Rubrics</a>
-                                <li><a href="#">Rubrics for Workshop Activities</a>
-                            </ul>
-                        </ul> -->
-                        <!-- <a href="#manuals">Manuals</a> -->
-                        <a href="StudentDashboard.html">PowerPoint Show Presentation</a>
-                        <a href="SD_videos.html">Video Lessons</a>
-                        <a href="#assessment">Practical Assessment Tools</a>
-                        <!--<a href="#quizzes">Q-BANK Quizzes</a>
-                        <a href="#exams">Q-BANK Examinations</a> -->
-                        <!-- <a href="#reference">References</a> -->
-                    </div>
-            </div>
-            <div class="dropdown">
+                        <a href="javascript:void(0)">Grading Criteria</a>
+                        <a href="javascript:void(0)">PowerPoint Show Presentation</a>
+                        <a href="javascript:void(0)">Video Lessons</a>
+                        <a href="javascript:void(0)">Practical Assessment Tools</a>
+                    </div> <!--https://docs.google.com/forms/d/e/1FAIpQLSd_idcyEjlLf18m0UpK42dOCemVTr8XQPPTFTePQLVPnIXHww/viewform?embedded=true -->
+            </div>  <!--https://docs.google.com/forms/u/0/-->
+            
+                <!--<div class="dropdown">
                 <button class="dropbtn"> About <i class="fa fa-caret-down"></i></button>
                     <div class="dropdown-content">
-                        <a href="#subject">The Subject</a>
-                        <a href="#author">The Author</a>
+                        <a href="#subject">The Course</a>
+                        <a href="author_info.html">The Author</a>
                         <a href="#author">Contact/Email Me</a>
-                    </div>
-            </div>
-
+                    </div> -->
+                
+                <!-- <script>
+                    //function openChildWindow() {
+                    //    const childWindow = window.open("author_info.html", "Author Info", "width=400,height=300");
+                        // You can adjust the width and height as needed
+                    }
+                </script> -->
+            <a href="author_info.html">About</a>
             <!--
             <a href="#nsr">New/Sign-in</a>      -->      
             
             <!-- <a href="#login">Log-in</a> -->
-    
-        <!-- *************************************** -->
-            <button onclick="document.getElementById('id01').style.display='block'" style="width:auto;">Login</button>
+            <a href="http://localhost/login.php">Login</a>
+        <!-- *************************************** --> 
+          <!--  <button onclick="document.getElementById('id01').style.display='block'" style="width:auto;">Login</button>
         </div>
-
-        <div id="id01" class="modal">
-            
-            <form class="modal-content animate" action="/action_page.php" method="post"> <!--/action_page.php-->
-                <div class="imgcontainer">
+        
+        <div id="id01" class="modal"> 
+            <form class="modal-content animate" action="/login.php" method="post">  <!--/action_page --> <!--
+                <div class="imgcontainer"> 
                     <span onclick="document.getElementById('id01').style.display='none'" class="close" title="Close Modal">&times;</span>
                     <img src="img_avatar2.png" alt="Avatar" class="avatar">
                 </div>
 
                 <div class="container">
-                    <label for="uname"><b>Username</b></label>
-                    <input type="text" placeholder="Enter Username" name="uname" required>
+                    <label for="uname"><b>User's Email Address:<font color="red">*</font></b></label>
+                    <input type="text" placeholder="Enter valid email address" name="uname" required>
 
-                    <label for="psw"><b>Password</b></label>
-                    <input type="password" placeholder="Enter Password" name="psw" required>
+                    <label for="psw"><b>Password:<font color="red">*</font></b></label>
+                    <input type="password" placeholder="Enter Your Password" name="psw" required>
+
+                    <label><b>User Type<font color="red">*</font></b></label> <br>
+                    <input type="usertype" name="usertype" list="usertypelist" placeholder = "Please select user type..." width = "50%" class="form-control" value="" maxlength="100" required="">
+                    <?php if (isset($usertype_error)) echo $usertype_error;?> </span>
+
+                        <datalist id="usertypelist">
+                            <option label = "Student" value = "1">Student</option>
+                            <option label = "Instructor" value = "2">Instructor</option>
+                            <option label = "Systems Administrator" value = "3">Systems Administrator</option>
+                        </datalist>
         
                     <button type="submit">Login</button>
                     <label>
                         <form id="myform">
                             <p>No Account yet? Create a new one</p>
                             <input type="checkbox" name="checkbox">By creating new account you agree to our <a href="#" style="color:dodgerblue">Terms & Privacy</a>.
-                            <a href="http://localhost/registration.php" >  Register</a> <!--"javascript:void(0)"-->
+                            <a href="http://localhost/registration.php">  Register</a>
                         </form>
                     </label>
                 </div>
@@ -499,9 +515,9 @@
                     <span class="psw">Forgot <a href="#">password?</a></span>
                 </div>
             </form>
+        -->
         </div>
-
-        <div class="bg"></div>
+    <div class="bg"></div>
 
 <script>
     // Get the modal
