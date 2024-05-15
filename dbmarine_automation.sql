@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Apr 29, 2024 at 03:26 PM
+-- Generation Time: May 15, 2024 at 03:33 AM
 -- Server version: 8.0.36
 -- PHP Version: 8.2.12
 
@@ -50,7 +50,7 @@ CREATE TABLE `assessment` (
 --
 
 CREATE TABLE `assessment_submission` (
-  `StudID` varchar(25) NOT NULL,
+  `StudID` bigint NOT NULL,
   `AssessID` varchar(25) NOT NULL,
   `CLID` varchar(50) NOT NULL,
   `Selected_Option` int NOT NULL,
@@ -89,7 +89,7 @@ CREATE TABLE `assignment` (
 --
 
 CREATE TABLE `assignment_submission` (
-  `StudID` varchar(25) NOT NULL,
+  `StudID` bigint NOT NULL,
   `AssignID` varchar(25) NOT NULL,
   `CLID` varchar(50) NOT NULL,
   `Selected_Option` int NOT NULL,
@@ -123,7 +123,7 @@ CREATE TABLE `classes` (
 CREATE TABLE `class_students` (
   `CSID` varchar(25) NOT NULL,
   `CLID` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
-  `StudID` varchar(25) NOT NULL,
+  `StudID` bigint NOT NULL,
   `CS_ClassTime` time NOT NULL,
   `CS_ClassDay` varchar(5) NOT NULL,
   `CS_Visit_Count` int NOT NULL,
@@ -146,7 +146,8 @@ CREATE TABLE `instructors` (
   `TGender` varchar(6) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
   `TEmail` tinytext NOT NULL,
   `TPassword` tinytext NOT NULL,
-  `TVCode` varchar(6) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL COMMENT 'used to store tempporary code for first login & confirmation',
+  `TVCode` varchar(5) DEFAULT NULL COMMENT 'used to store tempporary code for first login & confirmation',
+  `TStatus` varchar(1) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL COMMENT 'P-Pending / R-Rejected / A-Accepted',
   `TCreated_at` datetime NOT NULL,
   `TUpdated_at` datetime NOT NULL,
   `UserID` int NOT NULL
@@ -213,7 +214,8 @@ CREATE TABLE `students` (
   `Stud_Gender` varchar(6) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
   `Stud_email` tinytext NOT NULL,
   `Stud_Password` tinytext NOT NULL,
-  `Stud_VCode` varchar(6) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL COMMENT 'used to store temporary access code for first time to login',
+  `Stud_VCode` int DEFAULT NULL COMMENT 'used to store verification code for first time registrant',
+  `Stud_Status` varchar(1) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL COMMENT 'P-Pending / R - Rejected / A - Accepted',
   `Stud_Created_at` datetime DEFAULT NULL,
   `Stud_Updated_at` datetime DEFAULT NULL,
   `UserID` int DEFAULT NULL
@@ -226,7 +228,7 @@ CREATE TABLE `students` (
 --
 
 CREATE TABLE `student_performance` (
-  `StudID` varchar(25) NOT NULL,
+  `StudID` bigint NOT NULL,
   `CLID` varchar(50) NOT NULL,
   `CSID` varchar(25) NOT NULL,
   `AssignID` varchar(25) NOT NULL,
@@ -242,11 +244,35 @@ CREATE TABLE `student_performance` (
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `users`
+--
+
+CREATE TABLE `users` (
+  `id` int NOT NULL,
+  `name` varchar(30) NOT NULL,
+  `email` varchar(100) NOT NULL,
+  `mobile` varchar(100) CHARACTER SET latin1 COLLATE latin1_swedish_ci DEFAULT NULL,
+  `password` varchar(250) NOT NULL,
+  `status` int NOT NULL DEFAULT '0',
+  `email_verification_link` varchar(255) NOT NULL,
+  `email_verified_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `users`
+--
+
+INSERT INTO `users` (`id`, `name`, `email`, `mobile`, `password`, `status`, `email_verification_link`, `email_verified_at`) VALUES
+(1, 'Drick Lamanilao Moniza', 'decgmoniza@gmail.com', NULL, 'e10adc3949ba59abbe56e057f20f883e', 0, '859c71f36a0f6fe531e5c9847b4c21a29070', NULL);
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `users_login_history`
 --
 
 CREATE TABLE `users_login_history` (
-  `StudID` varchar(25) NOT NULL,
+  `StudID` bigint NOT NULL,
   `TID` bigint NOT NULL,
   `LogDate` date NOT NULL,
   `LogTime` time NOT NULL
@@ -387,8 +413,10 @@ ALTER TABLE `ppsx_lessons`
 --
 ALTER TABLE `students`
   ADD PRIMARY KEY (`StudID`),
+  ADD UNIQUE KEY `StudID_2` (`StudID`),
   ADD KEY `UID` (`UserID`),
-  ADD KEY `UID_2` (`UserID`);
+  ADD KEY `UID_2` (`UserID`),
+  ADD KEY `StudID` (`StudID`);
 
 --
 -- Indexes for table `student_performance`
@@ -399,6 +427,13 @@ ALTER TABLE `student_performance`
   ADD KEY `CSID` (`CSID`),
   ADD KEY `AssignID` (`AssignID`),
   ADD KEY `AssessID` (`AssessID`);
+
+--
+-- Indexes for table `users`
+--
+ALTER TABLE `users`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `email` (`email`);
 
 --
 -- Indexes for table `users_login_history`
@@ -440,7 +475,13 @@ ALTER TABLE `ppsx_lessons`
 -- AUTO_INCREMENT for table `students`
 --
 ALTER TABLE `students`
-  MODIFY `StudID` bigint NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `StudID` bigint NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `users`
+--
+ALTER TABLE `users`
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `video_lessons`
@@ -459,6 +500,12 @@ ALTER TABLE `assessment`
   ADD CONSTRAINT `assessment_ibfk_1` FOREIGN KEY (`CLID`) REFERENCES `classes` (`CLID`);
 
 --
+-- Constraints for table `assessment_submission`
+--
+ALTER TABLE `assessment_submission`
+  ADD CONSTRAINT `assessment_submission_ibfk_1` FOREIGN KEY (`StudID`) REFERENCES `students` (`StudID`);
+
+--
 -- Constraints for table `assignment`
 --
 ALTER TABLE `assignment`
@@ -469,13 +516,21 @@ ALTER TABLE `assignment`
 --
 ALTER TABLE `assignment_submission`
   ADD CONSTRAINT `assignment_submission_ibfk_2` FOREIGN KEY (`AssignID`) REFERENCES `assignment` (`AssignID`),
-  ADD CONSTRAINT `assignment_submission_ibfk_3` FOREIGN KEY (`CLID`) REFERENCES `classes` (`CLID`);
+  ADD CONSTRAINT `assignment_submission_ibfk_3` FOREIGN KEY (`CLID`) REFERENCES `classes` (`CLID`),
+  ADD CONSTRAINT `assignment_submission_ibfk_4` FOREIGN KEY (`StudID`) REFERENCES `students` (`StudID`);
 
 --
 -- Constraints for table `class_students`
 --
 ALTER TABLE `class_students`
-  ADD CONSTRAINT `class_students_ibfk_2` FOREIGN KEY (`CLID`) REFERENCES `classes` (`CLID`);
+  ADD CONSTRAINT `class_students_ibfk_2` FOREIGN KEY (`CLID`) REFERENCES `classes` (`CLID`),
+  ADD CONSTRAINT `class_students_ibfk_3` FOREIGN KEY (`StudID`) REFERENCES `students` (`StudID`);
+
+--
+-- Constraints for table `instructors`
+--
+ALTER TABLE `instructors`
+  ADD CONSTRAINT `instructors_ibfk_1` FOREIGN KEY (`UserID`) REFERENCES `users_type` (`UserID`);
 
 --
 -- Constraints for table `student_performance`
@@ -484,7 +539,14 @@ ALTER TABLE `student_performance`
   ADD CONSTRAINT `student_performance_ibfk_2` FOREIGN KEY (`CLID`) REFERENCES `classes` (`CLID`),
   ADD CONSTRAINT `student_performance_ibfk_3` FOREIGN KEY (`CSID`) REFERENCES `class_students` (`CSID`),
   ADD CONSTRAINT `student_performance_ibfk_4` FOREIGN KEY (`AssignID`) REFERENCES `assignment` (`AssignID`),
-  ADD CONSTRAINT `student_performance_ibfk_5` FOREIGN KEY (`AssessID`) REFERENCES `assessment` (`AssessID`);
+  ADD CONSTRAINT `student_performance_ibfk_5` FOREIGN KEY (`AssessID`) REFERENCES `assessment` (`AssessID`),
+  ADD CONSTRAINT `student_performance_ibfk_6` FOREIGN KEY (`StudID`) REFERENCES `students` (`StudID`);
+
+--
+-- Constraints for table `users_login_history`
+--
+ALTER TABLE `users_login_history`
+  ADD CONSTRAINT `users_login_history_ibfk_1` FOREIGN KEY (`StudID`) REFERENCES `students` (`StudID`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

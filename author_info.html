@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+body {
+  font-family: Arial, Helvetica, sans-serif;
+  margin: 0;
+}
+
+html {
+  box-sizing: border-box;
+}
+
+*, *:before, *:after {
+  box-sizing: inherit;
+}
+
+.column {
+  float: left;
+  width: 33.3%;
+  margin-bottom: 16px;
+  padding: 0 8px;
+}
+
+.card {
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+  margin: 8px;
+}
+
+.about-section {
+  padding: 50px;
+  text-align: center;
+  background-color: #474e5d;
+  color: white;
+}
+
+.container {
+  padding: 0 16px;
+}
+
+.container::after, .row::after {
+  content: "";
+  clear: both;
+  display: table;
+}
+
+.title {
+  color: grey;
+}
+
+.button {
+  border: none;
+  outline: 0;
+  display: inline-block;
+  padding: 8px;
+  color: white;
+  background-color: #000;
+  text-align: center;
+  cursor: pointer;
+  width: 100%;
+}
+
+.button:hover {
+  background-color: #555;
+}
+
+@media screen and (max-width: 650px) {
+  .column {
+    width: 100%;
+    display: block;
+  }
+}
+img {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+p{
+    text-align: center;
+}
+</style>
+</head>
+<body>
+
+<div class="about-section">
+  <img src="PMMA.png" alt="pmma" style="width:10%">
+  <h1>PMMA-CME-IPMAC</h1>
+  <p>This course covers the knowledge, understanding and proficiency of the basic control engineering;<br>
+    the operation, maintenance and repair of electrical, electronic and control systems. The competencies<br>
+    covered in this course is in accordance with STCW ’78 code as amended. It aims to provide students<br>
+    with necessary knowledge, understanding and proficiency listed under column 2 of table A-III/1 
+    and A-III/2.</p>
+</div>
+
+<h2 style="text-align:center">Our Team</h2>
+<div class="row">
+  <div class="column">
+    <div class="card">
+        <img src="img_avatar2.png" alt="Wency" style="width:30%">
+        <div class="container">
+            <h2 style="text-align:center">C/E Arcelio V. Niedo</h2>
+            <p class="title">Faculty-CME</p>
+            <p></p>
+            <p text-align="center" >C/E Arcelio V. Niedo currently serves as an industry adviser to 
+                Engr. Wenceslao M. Cawagas III in his Master of Engineering Program research 
+                writings. C/E Niedo, a graduate of the Philippine Merchant Marine Academy (PMMA) 
+                from the Class of '82, holds the rank of Chief Engineer. With extensive experience 
+                in the maritime industry, C/E Niedo is an Associate Professor at the College of Marine 
+                Engineering at PMMA. He provides valuable insights and guidance to engineering students, 
+                drawing from his rich background in marine engineering.
+            </p>
+            <p><b>arcelio_niedo@gmail.com</b></p>
+            <p><button class="button">Contact</button></p>
+        </div>
+    </div>
+  </div>
+
+  <div class="column">
+    <div class="card">
+      <img src="wency.jpg" alt="Wency" style="width:30%">
+      <div class="container">
+        <h2 style="text-align:center">Engr. Wenceslao M. Cawagas III</h2>
+        <p class="title"><b>Faculty-CME/Author</b></p>
+        <p text-align="center" >Engr. Wenceslao M. Cawagas III is an Assistant Professor at the 
+            <b>Philippine Merchant Marine Academy (PMMA)</b> in San Narciso, Zambales, Philippines. 
+            He has been teaching <b><i>Basic Electronics, Basic Electricity, and Basic Instrumentation 
+            & Control Engineering</i></b> for 18 years. Engr. Cawagas earned his <b>Bachelor of Science in 
+            Electronics and Communication Engineering (BSECE)</b> from the <b>Polytechnic University of 
+            the Philippines (PUP)</b>. He is a registered <b>Electronics Engineer and a regular member 
+            of the Institute of Electronics Engineers of the Philippines (IECEP)...</b>
+        </p>
+        <p><b>wenceslaocawagas311@gmail.com</b></p>
+        <p><button class="button">Contact</button></p>
+      </div>
+    </div>
+  </div>
+  
+  <div class="column">
+    <div class="card">
+      <img src="drick.jpeg" alt="Drick" style="width:30%">
+      <div class="container">
+        <h2 style="text-align:center">Mr. Drick L. Moñiza</h2>
+        <p class="title"><b>Programmer/Database Designer</b></p>
+        <p>A graduate of <b>Bachelor of Science in Computer Science (BSCS)</b> in 1997, Mr. Moñiza earned 33 
+           units towards a <b>Master in Information Technology (MIT)</b> at STI College Southwoods, Carmona, 
+           Cavite. He has over 25 years of experience in the teaching industry, including 8 years in 
+           Brunei Darussalam from 2010 to 2018, focusing on ICT education. <br>
+           Professionally inclined in Computer Programming, he specializes in <b><i>Desktop Application 
+           Development, Web Application Development, Computer Networks, and other ICT-related courses.</i></b> 
+           Mr. Moñiza is proficient in programming languages such as <b>Java, C/C++, and is Microsoft 
+           Certified in Mastering Visual Basic Programming and Office Productivity Tools.</b> Additionally, 
+           he is <b>MARINA Certified in IMO MC 6.09 and IMO MC 3.12.</b>
+        </p>
+        <p><b>drickmoniza14@gmail.com</b></p>
+        <p><button class="button">Contact</button></p>
+      </div>
+    </div>
+  </div>
+</div>
+
+</body>
+</html>
