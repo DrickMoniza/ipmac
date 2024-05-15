@@ -3,7 +3,7 @@
   $ustatus = 'P';
   $vcode = rand(1, 31999); 
   $pwd_strength = "";
-  $strengthOutput = "";
+  $strengthOutput;
 
   if(isset($_SESSION['user_id'])!="") {
     header("Location: dashboard.php");
@@ -47,7 +47,7 @@ if (isset($_POST['signup'])) {
         $cpassword_error = "Password and Confirm Password doesn't match";
     }
 
-    if(((((substr($serial, 0, 2)) == "EM") Or ((substr($serial, 0, 2)) == "NM")) And ($usertype == "1")) And (($pwd_strength == $pwd_strength))) { 
+    if(((((substr($serial, 0, 2)) == "EM") Or ((substr($serial, 0, 2)) == "NM")) And ($usertype == "1")) And (($pwd_strength == 5))) { 
         if (!$error) {
             if(mysqli_query($conn, "INSERT INTO students(StudSN, StudFName, StudLName, Stud_Gender, Stud_email, Stud_Password, Stud_VCode, Stud_Status, Stud_Created_at, Stud_Updated_at, UserID) VALUES ('" . $serial . "', '" . $fname . "', '" . $lname . "', '" . $gender . "', '" . $email . "', '" . md5($password) . "', '". $vcode ."', '" . $ustatus . "', '" . date("Y-m-d h:i:s") . "', '" . date("Y-m-d h:i:s") . "', '" . $usertype . "')")) 
             {
@@ -55,7 +55,7 @@ if (isset($_POST['signup'])) {
                 exit();
             }
         }
-    } elseif (((preg_match('/^\d{4}$/', $serial)) And ($usertype == "2" Or $usertype == "3")) And (($pwd_strength == $pwd_strength))) {
+    } elseif (((preg_match('/^\d{4}$/', $serial)) And ($usertype == "2" Or $usertype == "3")) And (($pwd_strength == 5))) {
         if (!$error) {
             if(mysqli_query($conn, "INSERT INTO instructors(EmpNum, TFName, TLName, TGender, TEmail, TPassword, TVCode, TStatus, TCreated_at, TUpdated_at, UserID) VALUES ('" . $serial . "', '" . $fname . "', '" . $lname . "', '" . $gender . "', '" . $email . "', '" . md5($password) . "', '" . $vcode . "', '" . $ustatus . "', '" . date("Y-m-d h:i:s") . "', '" . date("Y-m-d h:i:s") . "', '" . $usertype . "')")) 
             {
@@ -177,7 +177,7 @@ mysqli_close($conn);
 
     <script>
         $strengthOutput = document.getElementById('strengthOutput');
-        //var $pwd_strength = "";
+        //$pwd_strength = "";
         function checkPasswordStrength(password) {
             var strength = 0;
             var color = '';
@@ -193,27 +193,27 @@ mysqli_close($conn);
                 case 2:
                     $strengthOutput.innerHTML = 'Weak';
                     color = 'Red';
-                    $pwd_strength = $strengthOutput.innerHTML;
+                    $pwd_strength = 2;
                     document.getElementById('strengthOutput').innerHTML = '<span style="color: ' + color + ';">' + $strengthOutput.innerHTML + '</span>';
                     break;
                 case 3:
                 case 4:
                     $strengthOutput.innerHTML = 'Moderate'; 
                     color = 'Orange';
-                    $pwd_strength = $strengthOutput.innerHTML;
+                    $pwd_strength = 4;
                     document.getElementById('strengthOutput').innerHTML = '<span style="color: ' + color + ';">' + $strengthOutput.innerHTML + '</span>';
                     break;
                 case 5:
                     $strengthOutput.innerHTML = 'Strong';
                     color = 'Green';
-                    $pwd_strength = $strengthOutput.innerHTML;
+                    $pwd_strength = 5;
                     document.getElementById('strengthOutput').innerHTML = '<span style="color: ' + color + ';">' + $strengthOutput.innerHTML + '</span>';
                     break;
                 default:
                     $strengthOutput.innerHTML = 'Very Weak';
-                    $pwd_strength = $strengthOutput.innerHTML;
+                    $pwd_strength = 0;
             }
-            //$pwd_strength = "";
+            //$pwd_strength = $pwd_strength;
             //$pwd_strength = $strengthOutput.innerHTML;
         }
 
